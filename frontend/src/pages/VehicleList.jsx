@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/VehicleList.css';
 
@@ -6,6 +7,7 @@ const VehicleList = () => {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchVehicles();
@@ -60,7 +62,16 @@ const VehicleList = () => {
 
   return (
     <div className="vehicle-list-container">
-      <h2 className="text-center mb-4">Vehículos en el Parqueadero</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <button 
+          className="btn btn-primary" 
+          onClick={() => navigate('/')}
+        >
+          ← Regresar al Registro
+        </button>
+        <h2 className="text-center mb-0">Vehículos en el Parqueadero</h2>
+        <div style={{width: '120px'}}></div>
+      </div>
       
       {error && <div className="alert alert-danger">{error}</div>}
       
@@ -72,6 +83,8 @@ const VehicleList = () => {
             <thead className="table-dark">
               <tr>
                 <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
                 <th>Placa</th>
                 <th>Tipo</th>
                 <th>Hora de Entrada</th>
@@ -83,6 +96,8 @@ const VehicleList = () => {
               {vehicles.map((vehicle) => (
                 <tr key={vehicle.id}>
                   <td>{vehicle.id}</td>
+                  <td>{vehicle.ownerFirstName || '-'}</td>
+                  <td>{vehicle.ownerLastName || '-'}</td>
                   <td>{vehicle.plate}</td>
                   <td>{getVehicleType(vehicle.type)}</td>
                   <td>{new Date(vehicle.entryTime).toLocaleString()}</td>
@@ -101,7 +116,7 @@ const VehicleList = () => {
                       </button>
                     )}
                     <button 
-                      className="btn btn-danger btn-sm"
+                      className="btn btn-danger btn-sm me-2"
                       onClick={() => handleDelete(vehicle.id)}
                     >
                       Eliminar
