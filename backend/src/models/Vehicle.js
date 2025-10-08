@@ -16,6 +16,8 @@ class Vehicle {
       id: nextId++,
       plate: vehicleData.plate,
       type: vehicleData.type,
+      ownerFirstName: vehicleData.ownerFirstName || '',
+      ownerLastName: vehicleData.ownerLastName || '',
       entryTime: vehicleData.entryTime || new Date(),
       exitTime: null,
       ...vehicleData
