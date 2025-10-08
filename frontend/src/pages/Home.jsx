@@ -10,7 +10,9 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setVehicle({ ...vehicle, [e.target.name]: e.target.value });
+    // Si el campo es "plate", convertir a mayúsculas
+    const value = e.target.name === 'plate' ? e.target.value.toUpperCase() : e.target.value;
+    setVehicle({ ...vehicle, [e.target.name]: value });
   };
 
   const handleSubmit = async (e) => {
